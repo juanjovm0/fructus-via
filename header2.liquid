@@ -1,0 +1,931 @@
+{% comment %}
+  Header Section - Fructus Vía
+  Modificado para incluir geolocalización y filtrado por sucursal
+{% endcomment %}
+
+{% comment %} Incluir sistema de geolocalización y filtrado {% endcomment %}
+{% render 'geolocation-handler' %}
+{% render 'branch-filter' %}
+
+<a data-encoded-tag-name="link" data-encoded-tag-value="" data-encoded-attr-rel="c3R5bGVzaGVldA==" data-encoded-attr-href="JTdCJTdCJTIwJ3NlY3Rpb24taGVhZGVyLmNzcyclMjAlN0MlMjBhc3NldF91cmwlMjAlN0QlN0Q=" data-encoded-attr-media="cHJpbnQ=" data-encoded-attr-onload="dGhpcy5tZWRpYSUzRCdhbGwn"></a>
+<a data-encoded-tag-name="link" data-encoded-tag-value="" data-encoded-attr-rel="c3R5bGVzaGVldA==" data-encoded-attr-href="JTdCJTdCJTIwJ2NvbXBvbmVudC1saXN0LW1lbnUuY3NzJyUyMCU3QyUyMGFzc2V0X3VybCUyMCU3RCU3RA==" data-encoded-attr-media="cHJpbnQ=" data-encoded-attr-onload="dGhpcy5tZWRpYSUzRCdhbGwn"></a>
+<a data-encoded-tag-name="link" data-encoded-tag-value="" data-encoded-attr-rel="c3R5bGVzaGVldA==" data-encoded-attr-href="JTdCJTdCJTIwJ2NvbXBvbmVudC1zZWFyY2guY3NzJyUyMCU3QyUyMGFzc2V0X3VybCUyMCU3RCU3RA==" data-encoded-attr-media="cHJpbnQ=" data-encoded-attr-onload="dGhpcy5tZWRpYSUzRCdhbGwn"></a>
+<a data-encoded-tag-name="link" data-encoded-tag-value="" data-encoded-attr-rel="c3R5bGVzaGVldA==" data-encoded-attr-href="JTdCJTdCJTIwJ2NvbXBvbmVudC1tZW51LWRyYXdlci5jc3MnJTIwJTdDJTIwYXNzZXRfdXJsJTIwJTdEJTdE" data-encoded-attr-media="cHJpbnQ=" data-encoded-attr-onload="dGhpcy5tZWRpYSUzRCdhbGwn"></a>
+<a data-encoded-tag-name="link" data-encoded-tag-value="" data-encoded-attr-rel="c3R5bGVzaGVldA==" data-encoded-attr-href="JTdCJTdCJTIwJ2NvbXBvbmVudC1jYXJ0LW5vdGlmaWNhdGlvbi5jc3MnJTIwJTdDJTIwYXNzZXRfdXJsJTIwJTdEJTdE" data-encoded-attr-media="cHJpbnQ=" data-encoded-attr-onload="dGhpcy5tZWRpYSUzRCdhbGwn"></a>
+<a data-encoded-tag-name="link" data-encoded-tag-value="" data-encoded-attr-rel="c3R5bGVzaGVldA==" data-encoded-attr-href="JTdCJTdCJTIwJ2NvbXBvbmVudC1jYXJ0LWl0ZW1zLmNzcyclMjAlN0MlMjBhc3NldF91cmwlMjAlN0QlN0Q=" data-encoded-attr-media="cHJpbnQ=" data-encoded-attr-onload="dGhpcy5tZWRpYSUzRCdhbGwn"></a>
+
+{%- if settings.predictive_search_enabled -%}
+  <a data-encoded-tag-name="link" data-encoded-tag-value="" data-encoded-attr-rel="c3R5bGVzaGVldA==" data-encoded-attr-href="JTdCJTdCJTIwJ2NvbXBvbmVudC1wcmVkaWN0aXZlLXNlYXJjaC5jc3MnJTIwJTdDJTIwYXNzZXRfdXJsJTIwJTdEJTdE" data-encoded-attr-media="cHJpbnQ=" data-encoded-attr-onload="dGhpcy5tZWRpYSUzRCdhbGwn"></a>
+{%- endif -%}
+
+<a data-encoded-tag-name="noscript" data-encoded-tag-value="JTdCJTdCJTIwJ3NlY3Rpb24taGVhZGVyLmNzcyclMjAlN0MlMjBhc3NldF91cmwlMjAlN0MlMjBzdHlsZXNoZWV0X3RhZyUyMCU3RCU3RA=="></a>
+<a data-encoded-tag-name="noscript" data-encoded-tag-value="JTdCJTdCJTIwJ2NvbXBvbmVudC1saXN0LW1lbnUuY3NzJyUyMCU3QyUyMGFzc2V0X3VybCUyMCU3QyUyMHN0eWxlc2hlZXRfdGFnJTIwJTdEJTdE"></a>
+<a data-encoded-tag-name="noscript" data-encoded-tag-value="JTdCJTdCJTIwJ2NvbXBvbmVudC1zZWFyY2guY3NzJyUyMCU3QyUyMGFzc2V0X3VybCUyMCU3QyUyMHN0eWxlc2hlZXRfdGFnJTIwJTdEJTdE"></a>
+<a data-encoded-tag-name="noscript" data-encoded-tag-value="JTdCJTdCJTIwJ2NvbXBvbmVudC1tZW51LWRyYXdlci5jc3MnJTIwJTdDJTIwYXNzZXRfdXJsJTIwJTdDJTIwc3R5bGVzaGVldF90YWclMjAlN0QlN0Q="></a>
+<a data-encoded-tag-name="noscript" data-encoded-tag-value="JTdCJTdCJTIwJ2NvbXBvbmVudC1jYXJ0LW5vdGlmaWNhdGlvbi5jc3MnJTIwJTdDJTIwYXNzZXRfdXJsJTIwJTdDJTIwc3R5bGVzaGVldF90YWclMjAlN0QlN0Q="></a>
+<a data-encoded-tag-name="noscript" data-encoded-tag-value="JTdCJTdCJTIwJ2NvbXBvbmVudC1jYXJ0LWl0ZW1zLmNzcyclMjAlN0MlMjBhc3NldF91cmwlMjAlN0MlMjBzdHlsZXNoZWV0X3RhZyUyMCU3RCU3RA=="></a>
+
+{%- if settings.predictive_search_enabled -%}
+  <a data-encoded-tag-name="noscript" data-encoded-tag-value="JTdCJTdCJTIwJ2NvbXBvbmVudC1wcmVkaWN0aXZlLXNlYXJjaC5jc3MnJTIwJTdDJTIwYXNzZXRfdXJsJTIwJTdDJTIwc3R5bGVzaGVldF90YWclMjAlN0QlN0Q="></a>
+{%- endif -%}
+
+<a data-encoded-tag-name="script" data-encoded-tag-value="" data-encoded-attr-src="JTdCJTdCJTIwJ2RldGFpbHMtZGlzY2xvc3VyZS5qcyclMjAlN0MlMjBhc3NldF91cmwlMjAlN0QlN0Q=" data-encoded-attr-defer="ZGVmZXI="></a>
+<a data-encoded-tag-name="script" data-encoded-tag-value="" data-encoded-attr-src="JTdCJTdCJTIwJ2RldGFpbHMtbW9kYWwuanMnJTIwJTdDJTIwYXNzZXRfdXJsJTIwJTdEJTdE" data-encoded-attr-defer="ZGVmZXI="></a>
+<a data-encoded-tag-name="script" data-encoded-tag-value="" data-encoded-attr-src="JTdCJTdCJTIwJ2NhcnQtbm90aWZpY2F0aW9uLmpzJyUyMCU3QyUyMGFzc2V0X3VybCUyMCU3RCU3RA==" data-encoded-attr-defer="ZGVmZXI="></a>
+<a data-encoded-tag-name="script" data-encoded-tag-value="" data-encoded-attr-src="JTdCJTdCJTIwJ3NlYXJjaC1mb3JtLmpzJyUyMCU3QyUyMGFzc2V0X3VybCUyMCU3RCU3RA==" data-encoded-attr-defer="ZGVmZXI="></a>
+
+{%- if settings.cart_type == "notification" -%}
+  
+    <div class="cart-notification-wrapper page-width">
+      <div tabindex="-1" role="dialog" aria-label="{{ 'general.cart.item_added' | t }}" aria-modal="true" class="cart-notification focus-inset color-{{ settings.cart_notification_color_scheme }}" id="cart-notification">
+        <div class="cart-notification__header">
+          <h3 class="cart-notification__heading caption-large text-body">
+            <svg fill="none" viewBox="0 0 12 9" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="icon icon-checkmark color-foreground-text">
+              <path fill="currentColor" d="M11.35.643a.5.5 0 01.006.707L4.417 8.34a.5.5 0 01-.708.006L.638 5.419a.5.5 0 11.724-.69l2.872 3.01L10.643.649a.5.5 0 01.707-.006z" clip-rule="evenodd" fill-rule="evenodd"></path>
+            </svg>
+            {{ 'general.cart.item_added' | t }}
+          </h3>
+          <button aria-label="{{ 'accessibility.close' | t }}" class="cart-notification__close modal__close-button link link--text focus-inset" type="button">
+            <svg aria-hidden="true" class="icon icon-close">
+              <a data-encoded-tag-name="use" data-encoded-tag-value="JTBBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIw" data-encoded-attr-href="JTIzaWNvbi1jbG9zZQ=="></a></svg>
+          </button>
+        </div>
+        <div class="cart-notification-product" id="cart-notification-product"></div>
+        <div class="cart-notification__links">
+          <a class="button button--secondary button--full-width" id="cart-notification-button" href="{{ routes.cart_url }}">{{ 'general.cart.view' | t }}</a>
+          <form id="cart-notification-form" method="post" action="{{ routes.cart_url }}">
+            <button type="submit" name="add" class="button button--primary button--full-width">{{ 'general.cart.checkout' | t }}</button>
+          </form>
+          <button class="link button-label" type="button">{{ 'general.continue_shopping' | t }}</button>
+        </div>
+      </div>
+    </div>
+  
+{%- endif -%}
+
+
+  {%- assign country_selector = false -%}
+{%- assign language_selector = false -%}
+
+{%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
+  {%- assign country_selector = true -%}
+{%- endif -%}
+
+{%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
+  {%- assign language_selector = true -%}
+{%- endif -%}
+
+  
+  {%- for block in section.blocks -%}
+    {%- case block.type -%}
+      {%- when '@app' -%}
+        {% render block %}
+      {%- when 'announcement' -%}
+        <div class="utility-bar color-{{ block.settings.color_scheme }} gradient{% if block.settings.show_line_separator %} utility-bar--border-bottom{% endif %}">
+          {%- if block.settings.text != blank -%}
+            {%- if block.settings.link != blank -%}
+              <a class="announcement-bar__link link link--text focus-inset animate-arrow" href="{{ block.settings.link }}">
+            {%- endif -%}
+                <div class="page-width">
+                  <p class="announcement-bar__message {{ block.settings.text_alignment }} h5">
+                    <span>{{ block.settings.text | escape }}</span>
+                    {%- if block.settings.link != blank -%}
+                      {% render 'icon-arrow' %}
+                    {%- endif -%}
+                  </p>
+                </div>
+            {%- if block.settings.link != blank -%}
+              </a>
+            {%- endif -%}
+          {%- endif -%}
+        </div>
+      
+      {%- when 'header-info-block' -%}
+        <div class="header-info-bar color-{{ block.settings.color_scheme }} gradient">
+          <div class="page-width">
+            <div class="header-info-content">
+              {%- if block.settings.info_type == 'store_info' -%}
+                <div class="header-store-info">
+                  <div class="store-info-content">
+                    <span class="store-icon">📍</span>
+                    <div class="store-text">
+                      <span class="store-label">{{ block.settings.store_label | default: 'Sucursal:' }}</span>
+                      <span class="store-name" id="current-branch-name">{{ block.settings.default_text | default: 'Detectando...' }}</span>
+                    </div>
+                  </div>
+                </div>
+              {%- elsif block.settings.info_type == 'shipping_info' -%}
+                <div class="header-shipping-info">
+                  <div class="shipping-info-content">
+                    <span class="shipping-icon">🚚</span>
+                    <div class="shipping-text">
+                      <span class="shipping-label">{{ block.settings.shipping_label | default: 'Código Postal:' }}</span>
+                      <input maxlength="{{ block.settings.max_length | default: 10 }}" placeholder="{{ block.settings.placeholder_text | default: 'Ingresa tu CP' }}" class="postal-input" id="postal-code-input" type="text">
+                    </div>
+                  </div>
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+    {%- endcase -%}
+  {%- endfor -%}
+
+  <header class="header header--{{ section.settings.logo_position }} header--mobile-{{ section.settings.mobile_logo_position }} page-width{% if section.settings.menu != blank %} header--has-menu{% endif %}{% if section.settings.enable_sticky_header %} shopify-section-header-sticky{% endif %}">
+    {%- if section.settings.menu != blank -%}
+      
+        <details class="menu-drawer-container" id="Details-menu-drawer-container">
+          <summary aria-label="{{ 'sections.header.menu' | t }}" class="header__icon header__icon--menu header__icon--summary link focus-inset">
+            <span>
+              {% render 'icon-hamburger' %}
+              {% render 'icon-close' %}
+            </span>
+          </summary>
+          <div class="gradient menu-drawer motion-reduce color-{{ section.settings.menu_color_scheme }}" id="menu-drawer">
+            <div class="menu-drawer__inner-container">
+              <div class="menu-drawer__navigation-container">
+                <nav class="menu-drawer__navigation">
+                  <ul role="list" class="menu-drawer__menu has-submenu list-menu">
+                    {%- for link in section.settings.menu.links -%}
+                      <li>
+                        {%- if link.links != blank -%}
+                          <details id="Details-menu-drawer-menu-item-{{ forloop.index }}">
+                            <summary class="menu-drawer__menu-item list-menu__item link link--text focus-inset{% if link.child_active %} menu-drawer__menu-item--active{% endif %}" id="HeaderDrawer-{{ link.handle }}">
+                              {{ link.title | escape }}
+                              {% render 'icon-arrow' %}
+                              {% render 'icon-caret' %}
+                            </summary>
+                            <div tabindex="-1" class="menu-drawer__submenu has-submenu gradient motion-reduce" id="link-{{ link.handle | escape }}">
+                              <div class="menu-drawer__inner-submenu">
+                                <button aria-expanded="true" class="menu-drawer__close-button link link--text focus-inset">
+                                  {% render 'icon-arrow' %}
+                                  {{ link.title | escape }}
+                                </button>
+                                <ul tabindex="-1" role="list" class="menu-drawer__menu list-menu">
+                                  {%- for childlink in link.links -%}
+                                    <li>
+                                      <a aria-current="page" class="menu-drawer__menu-item link link--text list-menu__item focus-inset{% if childlink.current %} menu-drawer__menu-item--active{% endif %}" href="{{ childlink.url }}">
+                                        {{ childlink.title | escape }}
+                                      </a>
+                                    </li>
+                                  {%- endfor -%}
+                                </ul>
+                              </div>
+                            </div>
+                          </details>
+                        {%- else -%}
+                          <a aria-current="page" class="menu-drawer__menu-item list-menu__item link link--text focus-inset{% if link.current %} menu-drawer__menu-item--active{% endif %}" href="{{ link.url }}">
+                            {{ link.title | escape }}
+                          </a>
+                        {%- endif -%}
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                </nav>
+                <div class="menu-drawer__utility-links">
+                  {%- if settings.enable_multilang -%}
+                    {%- if language_selector -%}
+                      <div class="disclosure">
+                        
+                          {%- form 'localization', id: 'HeaderLanguageFormNoScriptDrawer', class: 'localization-form' -%}
+                            <div class="no-js-hidden">
+                              <h2 id="HeaderLanguageLabelNoScriptDrawer" class="caption-large text-body">{{ 'localization.language_label' | t }}</h2>
+                              <div aria-describedby="HeaderLanguageLabelNoScriptDrawer" aria-controls="HeaderLanguageListNoScriptDrawer" aria-expanded="false" class="disclosure__button localization-form__select localization-selector link link--text caption-large">
+                                <span>{{ localization.language.endonym_name | capitalize }}</span>
+                                {% render 'icon-caret' %}
+                              </div>
+                              <ul hidden="" class="disclosure__list list-unstyled" role="list" id="HeaderLanguageListNoScriptDrawer">
+                                {%- for language in localization.available_languages -%}
+                                  <li tabindex="-1" class="disclosure__item">
+                                    <a data-value="{{ language.iso_code }}" lang="{{ language.iso_code }}" href="#" class="link link--text disclosure__link caption-large{% if language.iso_code == localization.language.iso_code %} disclosure__link--active{% endif %} focus-inset">
+                                      {{ language.endonym_name | capitalize }}
+                                    </a>
+                                  </li>
+                                {%- endfor -%}
+                              </ul>
+                            </div>
+                            <a data-encoded-tag-name="noscript" data-encoded-tag-value="JTBBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTNDZGl2JTIwY2xhc3MlM0QlMjJsb2NhbGl6YXRpb24tZm9ybV9fc2VsZWN0JTIyJTNFJTBBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTNDaDIlMjBjbGFzcyUzRCUyMnZpc3VhbGx5LWhpZGRlbiUyMiUyMGlkJTNEJTIySGVhZGVyTGFuZ3VhZ2VMYWJlbE5vU2NyaXB0RHJhd2VyJTIyJTNFJTdCJTdCJTIwJ2xvY2FsaXphdGlvbi5sYW5ndWFnZV9sYWJlbCclMjAlN0MlMjB0JTIwJTdEJTdEJTNDJTJGaDIlM0UlMEElMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlM0NzZWxlY3QlMjBjbGFzcyUzRCUyMmxvY2FsaXphdGlvbi1zZWxlY3RvciUyMGxpbmslMjIlMjBuYW1lJTNEJTIybG9jYWxlX2NvZGUlMjIlMjBhcmlhLWxhYmVsbGVkYnklM0QlMjJIZWFkZXJMYW5ndWFnZUxhYmVsTm9TY3JpcHREcmF3ZXIlMjIlM0UlMEElMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlN0IlMjUtJTIwZm9yJTIwbGFuZ3VhZ2UlMjBpbiUyMGxvY2FsaXphdGlvbi5hdmFpbGFibGVfbGFuZ3VhZ2VzJTIwLSUyNSU3RCUwQSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUzQ29wdGlvbiUyMHZhbHVlJTNEJTIyJTdCJTdCJTIwbGFuZ3VhZ2UuaXNvX2NvZGUlMjAlN0QlN0QlMjIlMjBsYW5nJTNEJTIyJTdCJTdCJTIwbGFuZ3VhZ2UuaXNvX2NvZGUlMjAlN0QlN0QlMjIlMjAlN0IlMjUtJTNEJTIyJTIyJTIwaWYlM0QlMjIlMjIlMjBsYW5ndWFnZS5pc29fY29kZSUzRCUyMiUzRCUyMiUyMGxvY2FsaXphdGlvbi5sYW5ndWFnZS5pc29fY29kZSUzRCUyMiUyMiUyMCUyNSU3RCUzRCUyMiUyMiUyMHNlbGVjdGVkJTdCJTI1JTNEJTIyJTIyJTIwZW5kaWYlM0QlMjIlMjIlM0UlMEElMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlN0IlN0IlMjBsYW5ndWFnZS5lbmRvbnltX25hbWUlMjAlN0MlMjBjYXBpdGFsaXplJTIwJTdEJTdEJTBBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTNDJTJGb3B0aW9uJTNFJTBBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTdCJTI1LSUyMGVuZGZvciUyMC0lMjUlN0QlMEElMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlM0MlMkZzZWxlY3QlM0UlMEElMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlN0IlMjUlMjByZW5kZXIlMjAnaWNvbi1jYXJldCclMjAlMjUlN0QlMEElMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlM0MlMkZkaXYlM0UlMEElMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlM0NidXR0b24lMjBjbGFzcyUzRCUyMmJ1dHRvbiUyMGJ1dHRvbi0tdGVydGlhcnklMjIlM0UlN0IlN0IlMjAnbG9jYWxpemF0aW9uLnVwZGF0ZV9sYW5ndWFnZSclMjAlN0MlMjB0JTIwJTdEJTdEJTNDJTJGYnV0dG9uJTNFJTBBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIw"></a>
+                          {%- endform -%}
+                        
+                      </div>
+                    {%- endif -%}
+                  {%- endif -%}
+                  {%- if shop.customer_accounts_enabled -%}
+                    <a class="menu-drawer__account link focus-inset h5 medium-hide large-up-hide" href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}">
+                      {%- liquid
+                        if customer
+                          echo 'customer.account_fallback' | t
+                        else
+                          echo 'customer.log_in' | t
+                        endif
+                      -%}
+                    </a>
+                  {%- endif -%}
+                  {%- if settings.enable_multilang -%}
+                    {%- if country_selector -%}
+                      <div class="disclosure">
+                        
+                          {%- form 'localization', id: 'HeaderCountryFormNoScriptDrawer', class: 'localization-form' -%}
+                            <div class="no-js-hidden">
+                              <h2 id="HeaderCountryLabelNoScriptDrawer" class="caption-large text-body">{{ 'localization.country_label' | t }}</h2>
+                              <div aria-describedby="HeaderCountryLabelNoScriptDrawer" aria-controls="HeaderCountryListNoScriptDrawer" aria-expanded="false" class="disclosure__button localization-form__select localization-selector link link--text caption-large">
+                                <span>{{ localization.country.name }} ({{ localization.country.currency.iso_code }} {% if localization.country.currency.symbol %}{{ localization.country.currency.symbol }}{% endif %})</span>
+                                {% render 'icon-caret' %}
+                              </div>
+                              <ul hidden="" class="disclosure__list list-unstyled" role="list" id="HeaderCountryListNoScriptDrawer">
+                                {%- for country in localization.available_countries -%}
+                                  <li tabindex="-1" class="disclosure__item">
+                                    <a data-value="{{ country.iso_code }}" href="#" class="link link--text disclosure__link caption-large{% if country.iso_code == localization.country.iso_code %} disclosure__link--active{% endif %} focus-inset">
+                                      {{ country.name }} ({{ country.currency.iso_code }} {% if country.currency.symbol %}{{ country.currency.symbol }}{% endif %})
+                                    </a>
+                                  </li>
+                                {%- endfor -%}
+                              </ul>
+                            </div>
+                            <a data-encoded-tag-name="noscript" data-encoded-tag-value="JTBBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTNDZGl2JTIwY2xhc3MlM0QlMjJsb2NhbGl6YXRpb24tZm9ybV9fc2VsZWN0JTIyJTNFJTBBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTNDaDIlMjBjbGFzcyUzRCUyMnZpc3VhbGx5LWhpZGRlbiUyMiUyMGlkJTNEJTIySGVhZGVyQ291bnRyeUxhYmVsTm9TY3JpcHREcmF3ZXIlMjIlM0UlN0IlN0IlMjAnbG9jYWxpemF0aW9uLmNvdW50cnlfbGFiZWwnJTIwJTdDJTIwdCUyMCU3RCU3RCUzQyUyRmgyJTNFJTBBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTNDc2VsZWN0JTIwY2xhc3MlM0QlMjJsb2NhbGl6YXRpb24tc2VsZWN0b3IlMjBsaW5rJTIyJTIwbmFtZSUzRCUyMmNvdW50cnlfY29kZSUyMiUyMGFyaWEtbGFiZWxsZWRieSUzRCUyMkhlYWRlckNvdW50cnlMYWJlbE5vU2NyaXB0RHJhd2VyJTIyJTNFJTBBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTdCJTI1LSUyMGZvciUyMGNvdW50cnklMjBpbiUyMGxvY2FsaXphdGlvbi5hdmFpbGFibGVfY291bnRyaWVzJTIwLSUyNSU3RCUwQSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUzQ29wdGlvbiUyMHZhbHVlJTNEJTIyJTdCJTdCJTIwY291bnRyeS5pc29fY29kZSUyMCU3RCU3RCUyMiUyMCU3QiUyNS0lM0QlMjIlMjIlMjBpZiUzRCUyMiUyMiUyMGNvdW50cnkuaXNvX2NvZGUlM0QlMjIlM0QlMjIlMjBsb2NhbGl6YXRpb24uY291bnRyeS5pc29fY29kZSUzRCUyMiUyMiUyMCUyNSU3RCUzRCUyMiUyMiUyMHNlbGVjdGVkJTdCJTI1JTNEJTIyJTIyJTIwZW5kaWYlM0QlMjIlMjIlM0UlMEElMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlN0IlN0IlMjBjb3VudHJ5Lm5hbWUlMjAlN0QlN0QlMjAoJTdCJTdCJTIwY291bnRyeS5jdXJyZW5jeS5pc29fY29kZSUyMCU3RCU3RCUyMCU3QiUyNSUyMGlmJTIwY291bnRyeS5jdXJyZW5jeS5zeW1ib2wlMjAlMjUlN0QlN0IlN0IlMjBjb3VudHJ5LmN1cnJlbmN5LnN5bWJvbCUyMCU3RCU3RCU3QiUyNSUyMGVuZGlmJTIwJTI1JTdEKSUwQSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUzQyUyRm9wdGlvbiUzRSUwQSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCU3QiUyNS0lMjBlbmRmb3IlMjAtJTI1JTdEJTBBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTNDJTJGc2VsZWN0JTNFJTBBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTdCJTI1JTIwcmVuZGVyJTIwJ2ljb24tY2FyZXQnJTIwJTI1JTdEJTBBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTNDJTJGZGl2JTNFJTBBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTNDYnV0dG9uJTIwY2xhc3MlM0QlMjJidXR0b24lMjBidXR0b24tLXRlcnRpYXJ5JTIyJTNFJTdCJTdCJTIwJ2xvY2FsaXphdGlvbi51cGRhdGVfY291bnRyeSclMjAlN0MlMjB0JTIwJTdEJTdEJTNDJTJGYnV0dG9uJTNFJTBBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIw"></a>
+                          {%- endform -%}
+                        
+                      </div>
+                    {%- endif -%}
+                  {%- endif -%}
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+      
+    {%- endif -%}
+
+    {%- if section.settings.logo_position == 'top-center' or section.settings.mobile_logo_position == 'top-center' -%}
+      {%- if request.page_type == 'index' -%}
+        <h1 class="header__heading">
+      {%- endif -%}
+          <a class="header__heading-link link link--text focus-inset" href="{{ routes.root_url }}">
+            {%- if settings.logo != blank -%}
+              <div class="header__heading-logo-wrapper">
+                {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
+                {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
+                {% comment %} {{ settings.logo | image_url: width: 600 | image_tag:
+                  class: 'header__heading-logo motion-reduce',
+                  widths: '50, 100, 150, 200, 250, 300, 400, 500, 600',
+                  width: settings.logo_width,
+                  height: logo_height,
+                  alt: logo_alt
+                }} {% endcomment %}
+                <img height="{{ settings.logo.height }}" width="{{ settings.logo.width }}" class="header__heading-logo motion-reduce" alt="{{ logo_alt }}" sizes="(min-width: {{ settings.page_width }}px) {{ settings.logo_width }}px, (min-width: 750px) {{ settings.logo_width | divided_by: 2 }}px, {{ settings.logo_width | divided_by: 2 | at_most: 150 }}px" src="" srcset="{%- if settings.logo.width &gt;= 50 -%}{{ settings.logo | image_url: width: 50 }} 50w,{%- endif -%}
+                    {%- if settings.logo.width &gt;= 100 -%}{{ settings.logo | image_url: width: 100 }} 100w,{%- endif -%}
+                    {%- if settings.logo.width &gt;= 150 -%}{{ settings.logo | image_url: width: 150 }} 150w,{%- endif -%}
+                    {%- if settings.logo.width &gt;= 200 -%}{{ settings.logo | image_url: width: 200 }} 200w,{%- endif -%}
+                    {%- if settings.logo.width &gt;= 250 -%}{{ settings.logo | image_url: width: 250 }} 250w,{%- endif -%}
+                    {%- if settings.logo.width &gt;= 300 -%}{{ settings.logo | image_url: width: 300 }} 300w,{%- endif -%}
+                    {%- if settings.logo.width &gt;= 400 -%}{{ settings.logo | image_url: width: 400 }} 400w,{%- endif -%}
+                    {%- if settings.logo.width &gt;= 500 -%}{{ settings.logo | image_url: width: 500 }} 500w,{%- endif -%}
+                    {%- if settings.logo.width &gt;= 600 -%}{{ settings.logo | image_url: width: 600 }} 600w,{%- endif -%}
+                    {%- if settings.logo.width &gt;= 700 -%}{{ settings.logo | image_url: width: 700 }} 700w,{%- endif -%}
+                    {%- if settings.logo.width &gt;= 800 -%}{{ settings.logo | image_url: width: 800 }} 800w,{%- endif -%}
+                    {%- if settings.logo.width &gt;= 900 -%}{{ settings.logo | image_url: width: 900 }} 900w,{%- endif -%}
+                    {{ settings.logo | image_url }} {{ settings.logo.width }}w">
+              </div>
+            {%- else -%}
+              <span class="h2">{{ shop.name }}</span>
+            {%- endif -%}
+          </a>
+      {%- if request.page_type == 'index' -%}
+        </h1>
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- if section.settings.menu != blank -%}
+      <nav class="header__inline-menu">
+        <ul role="list" class="list-menu list-menu--inline">
+          {%- for link in section.settings.menu.links -%}
+            <li>
+              {%- if link.links != blank -%}
+                
+                  <details class="mega-menu" id="Details-HeaderMenu-{{ forloop.index }}">
+                    <summary class="header__menu-item list-menu__item link focus-inset" id="HeaderMenu-{{ link.handle }}">
+                      <span class="header__active-menu-item">{{ link.title | escape }}</span>
+                      {% render 'icon-caret' %}
+                    </summary>
+                    <div tabindex="-1" class="mega-menu__content color-{{ section.settings.menu_color_scheme }} gradient motion-reduce global-media-settings" id="MegaMenu-Content-{{ forloop.index }}">
+                      <ul role="list" class="mega-menu__list page-width{% if link.levels == 0 %} mega-menu__list--condensed{% endif %}">
+                        {%- assign mega_menu_columns = link.links.size -%}
+                        {%- if mega_menu_columns &gt; 4 -%}
+                          {%- assign mega_menu_columns = 4 -%}
+                        {%- endif -%}
+                        {%- for childlink in link.links -%}
+                          <li class="mega-menu__item">
+                            <a aria-current="page" class="mega-menu__link mega-menu__link--level-2 link{% if childlink.current %} mega-menu__link--active{% endif %}" href="{{ childlink.url }}">
+                              {{ childlink.title | escape }}
+                            </a>
+                            {%- if childlink.links != blank -%}
+                              <ul role="list" class="list-unstyled">
+                                {%- for grandchildlink in childlink.links -%}
+                                  <li>
+                                    <a aria-current="page" class="mega-menu__link link{% if grandchildlink.current %} mega-menu__link--active{% endif %}" href="{{ grandchildlink.url }}">
+                                      {{ grandchildlink.title | escape }}
+                                    </a>
+                                  </li>
+                                {%- endfor -%}
+                              </ul>
+                            {%- endif -%}
+                          </li>
+                        {%- endfor -%}
+                      </ul>
+                    </div>
+                  </details>
+                
+              {%- else -%}
+                <a aria-current="page" class="header__menu-item list-menu__item link link--text focus-inset" href="{{ link.url }}">
+                  <span class="header__active-menu-item">{{ link.title | escape }}</span>
+                </a>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+    {%- endif -%}
+
+    {%- if section.settings.logo_position != 'top-center' and section.settings.mobile_logo_position != 'top-center' -%}
+      {%- if request.page_type == 'index' -%}
+        <h1 class="header__heading">
+      {%- endif -%}
+          <a class="header__heading-link link link--text focus-inset" href="{{ routes.root_url }}">
+            {%- if settings.logo != blank -%}
+              <div class="header__heading-logo-wrapper">
+                {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
+                {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
+                {% comment %} {{ settings.logo | image_url: width: 600 | image_tag:
+                  class: 'header__heading-logo',
+                  widths: '50, 100, 150, 200, 250, 300, 400, 500, 600',
+                  width: settings.logo_width,
+                  height: logo_height,
+                  alt: logo_alt
+                }} {% endcomment %}
+                <img height="{{ settings.logo.height }}" width="{{ settings.logo.width }}" class="header__heading-logo" alt="{{ logo_alt }}" sizes="(min-width: {{ settings.page_width }}px) {{ settings.logo_width }}px, (min-width: 750px) {{ settings.logo_width | divided_by: 2 }}px, {{ settings.logo_width | divided_by: 2 | at_most: 150 }}px" src="" srcset="{%- if settings.logo.width &gt;= 50 -%}{{ settings.logo | image_url: width: 50 }} 50w,{%- endif -%}
+                    {%- if settings.logo.width &gt;= 100 -%}{{ settings.logo | image_url: width: 100 }} 100w,{%- endif -%}
+                    {%- if settings.logo.width &gt;= 150 -%}{{ settings.logo | image_url: width: 150 }} 150w,{%- endif -%}
+                    {%- if settings.logo.width &gt;= 200 -%}{{ settings.logo | image_url: width: 200 }} 200w,{%- endif -%}
+                    {%- if settings.logo.width &gt;= 250 -%}{{ settings.logo | image_url: width: 250 }} 250w,{%- endif -%}
+                    {%- if settings.logo.width &gt;= 300 -%}{{ settings.logo | image_url: width: 300 }} 300w,{%- endif -%}
+                    {%- if settings.logo.width &gt;= 400 -%}{{ settings.logo | image_url: width: 400 }} 400w,{%- endif -%}
+                    {%- if settings.logo.width &gt;= 500 -%}{{ settings.logo | image_url: width: 500 }} 500w,{%- endif -%}
+                    {%- if settings.logo.width &gt;= 600 -%}{{ settings.logo | image_url: width: 600 }} 600w,{%- endif -%}
+                    {%- if settings.logo.width &gt;= 700 -%}{{ settings.logo | image_url: width: 700 }} 700w,{%- endif -%}
+                    {%- if settings.logo.width &gt;= 800 -%}{{ settings.logo | image_url: width: 800 }} 800w,{%- endif -%}
+                    {%- if settings.logo.width &gt;= 900 -%}{{ settings.logo | image_url: width: 900 }} 900w,{%- endif -%}
+                    {{ settings.logo | image_url }} {{ settings.logo.width }}w">
+              </div>
+            {%- else -%}
+              <span class="h2">{{ shop.name }}</span>
+            {%- endif -%}
+          </a>
+      {%- if request.page_type == </h1></header>
+
+      {%- if request.page_type == 'index' -%}
+        
+      {%- endif -%}
+    {%- endif -%}
+
+    <div class="header__icons">
+      
+        <details>
+          <summary aria-label="{{ 'general.search.search' | t }}" aria-haspopup="dialog" class="header__icon header__icon--search header__icon--summary link focus-inset modal__toggle">
+            <span>
+              <svg aria-hidden="true" class="modal__toggle-open icon icon-search">
+                <a data-encoded-tag-name="use" data-encoded-tag-value="JTBBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIw" data-encoded-attr-href="JTIzaWNvbi1zZWFyY2g="></a></svg>
+              <svg aria-hidden="true" class="modal__toggle-close icon icon-close">
+                <a data-encoded-tag-name="use" data-encoded-tag-value="JTBBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIw" data-encoded-attr-href="JTIzaWNvbi1jbG9zZQ=="></a></svg>
+            </span>
+          </summary>
+          <div aria-label="{{ 'general.search.search' | t }}" aria-modal="true" role="dialog" class="search-modal modal__content gradient">
+            <div class="modal-overlay"></div>
+            <div tabindex="-1" class="search-modal__content{% if settings.inputs_shadow_vertical_offset != 0 and settings.inputs_shadow_vertical_offset &lt; 0 %} search-modal__content-top{% else %} search-modal__content-bottom{% endif %}">
+              {%- if settings.predictive_search_enabled -%}
+                
+              {%- else -%}
+                
+              {%- endif -%}
+                <form class="search search-modal__form" role="search" method="get" action="{{ routes.search_url }}">
+                  <div class="field">
+                    <input spellcheck="false" autocapitalize="off" autocomplete="off" aria-autocomplete="list" aria-owns="predictive-search-results" aria-expanded="false" placeholder="{{ 'general.search.search' | t }}" value="{{ search.terms | escape }}" name="q" type="search" id="Search-In-Modal" class="search__input field__input">
+                    <label for="Search-In-Modal" class="field__label">{{ 'general.search.search' | t }}</label>
+                    <input value="last" name="options[prefix]" type="hidden">
+                    <button aria-label="{{ 'general.search.reset' | t }}" class="reset__button field__button{% if search.terms == blank %} hidden{% endif %}" type="reset">
+                      <svg aria-hidden="true" class="icon icon-close">
+                        <a data-encoded-tag-name="use" data-encoded-tag-value="JTBBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIw" data-encoded-attr-href="JTIzaWNvbi1jbG9zZQ=="></a></svg>
+                    </button>
+                    <button aria-label="{{ 'general.search.search' | t }}" class="search__button field__button">
+                      <svg aria-hidden="true" class="icon icon-search">
+                        <a data-encoded-tag-name="use" data-encoded-tag-value="JTBBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIw" data-encoded-attr-href="JTIzaWNvbi1zZWFyY2g="></a></svg>
+                    </button>
+                  </div>
+
+                  {%- if settings.predictive_search_enabled -%}
+                    <div data-predictive-search="" tabindex="-1" class="predictive-search predictive-search--header">
+
+                      <div class="predictive-search__loading-state">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 66 66" class="spinner" aria-hidden="true">
+                          <circle r="30" cy="33" cx="33" stroke-width="6" fill="none" class="path"></circle>
+                        </svg>
+                      </div>
+                    </div>
+
+                    <span aria-hidden="true" role="status" class="predictive-search-status visually-hidden"></span>
+                  {%- endif -%}
+                </form>
+              {%- if settings.predictive_search_enabled -%}
+                
+              {%- else -%}
+                
+              {%- endif -%}
+              <button aria-label="{{ 'accessibility.close' | t }}" class="search-modal__close-button modal__close-button link link--text focus-inset" type="button">
+                <svg aria-hidden="true" class="icon icon-close">
+                  <a data-encoded-tag-name="use" data-encoded-tag-value="JTBBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIw" data-encoded-attr-href="JTIzaWNvbi1jbG9zZQ=="></a></svg>
+              </button>
+            </div>
+          </div>
+        </details>
+      
+
+      {%- if shop.customer_accounts_enabled -%}
+        <a class="header__icon header__icon--account link focus-inset{% if section.settings.menu != blank %} small-hide{% endif %}" href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}">
+          {% render 'icon-account' %}
+          <span class="visually-hidden">
+            {%- liquid
+              if customer
+                echo 'customer.account_fallback' | t
+              else
+                echo 'customer.log_in' | t
+              endif
+            -%}
+          </span>
+        </a>
+      {%- endif -%}
+
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when '@app' -%}
+            {% render block %}
+        {%- endcase -%}
+      {%- endfor -%}
+
+      <a id="cart-icon-bubble" class="header__icon header__icon--cart link focus-inset" href="{{ routes.cart_url }}">
+        {%- liquid
+          if cart == empty
+            render 'icon-cart-empty'
+          else
+            render 'icon-cart'
+          endif
+        -%}
+        <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
+        {%- if cart != empty -%}
+          <div class="cart-count-bubble">
+            {%- if cart.item_count &lt; 100 -%}
+              <span aria-hidden="true">{{ cart.item_count }}</span>
+            {%- endif -%}
+            <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+          </div>
+        {%- endif -%}
+      </a>
+    </div>
+  
+
+
+{%- if settings.cart_type == "notification" -%}
+  {%- render 'cart-notification', color_scheme: settings.cart_notification_color_scheme, desktop_menu_type: section.settings.menu_type_desktop -%}
+{%- endif -%}
+
+{% comment %} Estilos CSS para geolocalización {% endcomment %}
+<style>
+.header-info-bar {
+  border-bottom: 1px solid rgba(var(--color-foreground), 0.08);
+  padding: 8px 0;
+}
+
+.header-info-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-store-info, .header-shipping-info {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: rgba(var(--color-foreground), 0.02);
+}
+
+.store-info-content, .shipping-info-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.store-icon, .shipping-icon {
+  font-size: 16px;
+  opacity: 0.8;
+}
+
+.store-text, .shipping-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.store-label, .shipping-label {
+  font-size: 11px;
+  color: rgba(var(--color-foreground), 0.6);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.store-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgb(var(--color-foreground));
+  line-height: 1.2;
+}
+
+.postal-input {
+  border: 1px solid rgba(var(--color-foreground), 0.2);
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 12px;
+  width: 90px;
+  text-align: center;
+  background: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+  transition: all 0.2s ease;
+}
+
+.postal-input:focus {
+  outline: none;
+  border-color: rgb(var(--color-button));
+  box-shadow: 0 0 0 2px rgba(var(--color-button), 0.1);
+}
+
+.postal-input::placeholder {
+  color: rgba(var(--color-foreground), 0.5);
+  font-size: 11px;
+}
+
+@media (max-width: 768px) {
+  .header-info-content {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .header-store-info, .header-shipping-info {
+    width: 100%;
+    justify-content: center;
+    padding: 6px 8px;
+  }
+  
+  .postal-input {
+    width: 80px;
+    font-size: 11px;
+    padding: 5px 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-info-bar {
+    padding: 6px 0;
+  }
+  
+  .store-info-content, .shipping-info-content {
+    gap: 6px;
+  }
+  
+  .store-icon, .shipping-icon {
+    font-size: 14px;
+  }
+  
+  .store-label, .shipping-label {
+    font-size: 10px;
+  }
+  
+  .store-name {
+    font-size: 12px;
+  }
+  
+  .postal-input {
+    width: 70px;
+    font-size: 10px;
+    padding: 4px 6px;
+  }
+}
+
+/* Animaciones para cambios de sucursal */
+.store-name {
+  transition: all 0.3s ease;
+}
+
+.store-name.updating {
+  opacity: 0.5;
+  transform: scale(0.95);
+}
+
+/* Indicador de carga */
+.store-name.loading::after {
+  content: "...";
+  animation: dots 1.5s infinite;
+}
+
+@keyframes dots {
+  0%, 20% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+</style>
+
+{% comment %} JavaScript de integración {% endcomment %}
+<a data-encoded-tag-name="script" data-encoded-tag-value="JTBBZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCclMkMlMjBmdW5jdGlvbigpJTIwJTdCJTBBJTIwJTIwJTJGJTJGJTIwTWFuZWphciUyMGNhbWJpbyUyMGVuJTIwaW5wdXQlMjBkZSUyMGMlQzMlQjNkaWdvJTIwcG9zdGFsJTBBJTIwJTIwY29uc3QlMjBwb3N0YWxJbnB1dCUyMCUzRCUyMGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdwb3N0YWwtY29kZS1pbnB1dCcpJTNCJTBBJTIwJTIwaWYlMjAocG9zdGFsSW5wdXQpJTIwJTdCJTBBJTIwJTIwJTIwJTIwbGV0JTIwZGVib3VuY2VUaW1lciUzQiUwQSUyMCUyMCUyMCUyMCUwQSUyMCUyMCUyMCUyMCUyRiUyRiUyMEV2ZW50byUyMGFsJTIwcGVyZGVyJTIwZm9jbyUwQSUyMCUyMCUyMCUyMHBvc3RhbElucHV0LmFkZEV2ZW50TGlzdGVuZXIoJ2JsdXInJTJDJTIwZnVuY3Rpb24oKSUyMCU3QiUwQSUyMCUyMCUyMCUyMCUyMCUyMGlmJTIwKHRoaXMudmFsdWUudHJpbSgpJTIwJTI2JTI2JTIwd2luZG93LmZydWN0dXNHZW9sb2NhdGlvbiklMjAlN0IlMEElMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjB3aW5kb3cuZnJ1Y3R1c0dlb2xvY2F0aW9uLnByb2Nlc3NQb3N0YWxDb2RlKHRoaXMudmFsdWUpJTNCJTBBJTIwJTIwJTIwJTIwJTIwJTIwJTdEJTBBJTIwJTIwJTIwJTIwJTdEKSUzQiUwQSUyMCUyMCUyMCUyMCUwQSUyMCUyMCUyMCUyMCUyRiUyRiUyMEV2ZW50byUyMGFsJTIwcHJlc2lvbmFyJTIwRW50ZXIlMEElMjAlMjAlMjAlMjBwb3N0YWxJbnB1dC5hZGRFdmVudExpc3RlbmVyKCdrZXlwcmVzcyclMkMlMjBmdW5jdGlvbihlKSUyMCU3QiUwQSUyMCUyMCUyMCUyMCUyMCUyMGlmJTIwKGUua2V5JTIwJTNEJTNEJTNEJTIwJ0VudGVyJyUyMCUyNiUyNiUyMHRoaXMudmFsdWUudHJpbSgpJTIwJTI2JTI2JTIwd2luZG93LmZydWN0dXNHZW9sb2NhdGlvbiklMjAlN0IlMEElMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjBlLnByZXZlbnREZWZhdWx0KCklM0IlMEElMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjB3aW5kb3cuZnJ1Y3R1c0dlb2xvY2F0aW9uLnByb2Nlc3NQb3N0YWxDb2RlKHRoaXMudmFsdWUpJTNCJTBBJTIwJTIwJTIwJTIwJTIwJTIwJTdEJTBBJTIwJTIwJTIwJTIwJTdEKSUzQiUwQSUyMCUyMCUyMCUyMCUwQSUyMCUyMCUyMCUyMCUyRiUyRiUyMEV2ZW50byUyMGRlJTIwZXNjcml0dXJhJTIwY29uJTIwZGVib3VuY2UlMEElMjAlMjAlMjAlMjBwb3N0YWxJbnB1dC5hZGRFdmVudExpc3RlbmVyKCdpbnB1dCclMkMlMjBmdW5jdGlvbigpJTIwJTdCJTBBJTIwJTIwJTIwJTIwJTIwJTIwY2xlYXJUaW1lb3V0KGRlYm91bmNlVGltZXIpJTNCJTBBJTIwJTIwJTIwJTIwJTIwJTIwY29uc3QlMjB2YWx1ZSUyMCUzRCUyMHRoaXMudmFsdWUudHJpbSgpJTNCJTBBJTIwJTIwJTIwJTIwJTIwJTIwJTBBJTIwJTIwJTIwJTIwJTIwJTIwaWYlMjAodmFsdWUubGVuZ3RoJTIwJTNFJTNEJTIwNCklMjAlN0IlMEElMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjBkZWJvdW5jZVRpbWVyJTIwJTNEJTIwc2V0VGltZW91dCgoKSUyMCUzRCUzRSUyMCU3QiUwQSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMGlmJTIwKHdpbmRvdy5mcnVjdHVzR2VvbG9jYXRpb24pJTIwJTdCJTBBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwd2luZG93LmZydWN0dXNHZW9sb2NhdGlvbi5wcm9jZXNzUG9zdGFsQ29kZSh2YWx1ZSklM0IlMEElMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlN0QlMEElMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlN0QlMkMlMjAxMDAwKSUzQiUwQSUyMCUyMCUyMCUyMCUyMCUyMCU3RCUwQSUyMCUyMCUyMCUyMCU3RCklM0IlMEElMjAlMjAlN0QlMEElMjAlMjAlMEElMjAlMjAlMkYlMkYlMjBBY3R1YWxpemFyJTIwbm9tYnJlJTIwZGUlMjBzdWN1cnNhbCUyMGNvbiUyMGFuaW1hY2klQzMlQjNuJTBBJTIwJTIwY29uc3QlMjBicmFuY2hOYW1lRWxlbWVudCUyMCUzRCUyMGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdjdXJyZW50LWJyYW5jaC1uYW1lJyklM0IlMEElMjAlMjBpZiUyMChicmFuY2hOYW1lRWxlbWVudCklMjAlN0IlMEElMjAlMjAlMjAlMjAlMkYlMkYlMjBFc2N1Y2hhciUyMGNhbWJpb3MlMjBkZSUyMHN1Y3Vyc2FsJTBBJTIwJTIwJTIwJTIwZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignYnJhbmNoQ2hhbmdlZCclMkMlMjBmdW5jdGlvbihldmVudCklMjAlN0IlMEElMjAlMjAlMjAlMjAlMjAlMjBjb25zdCUyMGJyYW5jaERhdGElMjAlM0QlMjBldmVudC5kZXRhaWwuYnJhbmNoRGF0YSUzQiUwQSUyMCUyMCUyMCUyMCUyMCUyMGlmJTIwKGJyYW5jaERhdGElMjAlMjYlMjYlMjBicmFuY2hEYXRhLm5hbWUpJTIwJTdCJTBBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwYnJhbmNoTmFtZUVsZW1lbnQuY2xhc3NMaXN0LmFkZCgndXBkYXRpbmcnKSUzQiUwQSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUwQSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMHNldFRpbWVvdXQoKCklMjAlM0QlM0UlMjAlN0IlMEElMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjBicmFuY2hOYW1lRWxlbWVudC50ZXh0Q29udGVudCUyMCUzRCUyMGJyYW5jaERhdGEubmFtZSUzQiUwQSUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMCUyMGJyYW5jaE5hbWVFbGVtZW50LmNsYXNzTGlzdC5yZW1vdmUoJ3VwZGF0aW5nJyklM0IlMEElMjAlMjAlMjAlMjAlMjAlMjAlMjAlMjAlN0QlMkMlMjAxNTApJTNCJTBBJTIwJTIwJTIwJTIwJTIwJTIwJTdEJTBBJTIwJTIwJTIwJTIwJTdEKSUzQiUwQSUyMCUyMCUyMCUyMCUwQSUyMCUyMCUyMCUyMCUyRiUyRiUyMFZlcmlmaWNhciUyMHN1Y3Vyc2FsJTIwZ3VhcmRhZGElMjBhbCUyMGNhcmdhciUwQSUyMCUyMCUyMCUyMGNvbnN0JTIwc2F2ZWRCcmFuY2glMjAlM0QlMjBsb2NhbFN0b3JhZ2UuZ2V0SXRlbSgnZnJ1Y3R1c19jdXJyZW50X2JyYW5jaCcpJTNCJTBBJTIwJTIwJTIwJTIwaWYlMjAoc2F2ZWRCcmFuY2glMjAlMjYlMjYlMjB3aW5kb3cuZnJ1Y3R1c0dlb2xvY2F0aW9uKSUyMCU3QiUwQSUyMCUyMCUyMCUyMCUyMCUyMGNvbnN0JTIwYnJhbmNoRGF0YSUyMCUzRCUyMHdpbmRvdy5mcnVjdHVzR2VvbG9jYXRpb24uZ2V0Q3VycmVudEJyYW5jaERhdGEoKSUzQiUwQSUyMCUyMCUyMCUyMCUyMCUyMGlmJTIwKGJyYW5jaERhdGElMjAlMjYlMjYlMjBicmFuY2hEYXRhLm5hbWUpJTIwJTdCJTBBJTIwJTIwJTIwJTIwJTIwJTIwJTIwJTIwYnJhbmNoTmFtZUVsZW1lbnQudGV4dENvbnRlbnQlMjAlM0QlMjBicmFuY2hEYXRhLm5hbWUlM0IlMEElMjAlMjAlMjAlMjAlMjAlMjAlN0QlMEElMjAlMjAlMjAlMjAlN0QlMEElMjAlMjAlN0QlMEElN0QpJTNCJTBB"></a>
+
+{% schema %}
+{
+  "name": "t:sections.header.name",
+  "class": "section-header",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "select",
+      "id": "logo_position",
+      "options": [
+        {
+          "value": "top-left",
+          "label": "t:sections.header.settings.logo_position.options__2.label"
+        },
+        {
+          "value": "top-center",
+          "label": "t:sections.header.settings.logo_position.options__3.label"
+        },
+        {
+          "value": "middle-left",
+          "label": "t:sections.header.settings.logo_position.options__1.label"
+        },
+        {
+          "value": "middle-center",
+          "label": "t:sections.header.settings.logo_position.options__4.label"
+        }
+      ],
+      "default": "middle-left",
+      "label": "t:sections.header.settings.logo_position.label",
+      "info": "t:sections.header.settings.logo_position.info"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "default": "main-menu",
+      "label": "t:sections.header.settings.menu.label"
+    },
+    {
+      "type": "select",
+      "id": "menu_type_desktop",
+      "options": [
+        {
+          "value": "dropdown",
+          "label": "t:sections.header.settings.menu_type_desktop.options__1.label"
+        },
+        {
+          "value": "mega",
+          "label": "t:sections.header.settings.menu_type_desktop.options__2.label"
+        },
+        {
+          "value": "drawer",
+          "label": "t:sections.header.settings.menu_type_desktop.options__3.label"
+        }
+      ],
+      "default": "dropdown",
+      "label": "t:sections.header.settings.menu_type_desktop.label",
+      "info": "t:sections.header.settings.menu_type_desktop.info"
+    },
+    {
+      "type": "select",
+      "id": "sticky_header_type",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:sections.header.settings.sticky_header_type.options__1.label"
+        },
+        {
+          "value": "on-scroll-up",
+          "label": "t:sections.header.settings.sticky_header_type.options__2.label"
+        },
+        {
+          "value": "always",
+          "label": "t:sections.header.settings.sticky_header_type.options__3.label"
+        },
+        {
+          "value": "reduce-logo-size",
+          "label": "t:sections.header.settings.sticky_header_type.options__4.label"
+        }
+      ],
+      "default": "on-scroll-up",
+      "label": "t:sections.header.settings.sticky_header_type.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_line_separator",
+      "default": true,
+      "label": "t:sections.header.settings.show_line_separator.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "background-1"
+    },
+    {
+      "type": "color_scheme",
+      "id": "menu_color_scheme",
+      "label": "t:sections.header.settings.menu_color_scheme.label",
+      "default": "background-1"
+    },
+    {
+      "type": "select",
+      "id": "mobile_logo_position",
+      "options": [
+        {
+          "value": "top-left",
+          "label": "t:sections.header.settings.mobile_logo_position.options__1.label"
+        },
+        {
+          "value": "top-center",
+          "label": "t:sections.header.settings.mobile_logo_position.options__2.label"
+        }
+      ],
+      "default": "top-center",
+      "label": "t:sections.header.settings.mobile_logo_position.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.header.settings.header__3.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_country_selector",
+      "default": true,
+      "label": "t:sections.header.settings.enable_country_selector.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.header.settings.header__4.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_language_selector",
+      "default": true,
+      "label": "t:sections.header.settings.enable_language_selector.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.header.settings.mobile_layout.content"
+    },
+    {
+      "type": "select",
+      "id": "mobile_logo_position",
+      "options": [
+        {
+          "value": "top-left",
+          "label": "t:sections.header.settings.mobile_logo_position.options__1.label"
+        },
+        {
+          "value": "top-center",
+          "label": "t:sections.header.settings.mobile_logo_position.options__2.label"
+        }
+      ],
+      "default": "top-center",
+      "label": "t:sections.header.settings.mobile_logo_position.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "announcement",
+      "name": "t:sections.header.blocks.announcement.name",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "t:sections.header.blocks.announcement.settings.paragraph.content"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "default": "Welcome to our store",
+          "label": "t:sections.header.blocks.announcement.settings.text.label"
+        },
+        {
+          "type": "select",
+          "id": "text_alignment",
+          "options": [
+            {
+              "value": "left",
+              "label": "t:sections.header.blocks.announcement.settings.text_alignment.options__1.label"
+            },
+            {
+              "value": "center",
+              "label": "t:sections.header.blocks.announcement.settings.text_alignment.options__2.label"
+            },
+            {
+              "value": "right",
+              "label": "t:sections.header.blocks.announcement.settings.text_alignment.options__3.label"
+            }
+          ],
+          "default": "center",
+          "label": "t:sections.header.blocks.announcement.settings.text_alignment.label"
+        },
+        {
+          "type": "color_scheme",
+          "id": "color_scheme",
+          "label": "t:sections.all.colors.label",
+          "default": "accent-1"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:sections.header.blocks.announcement.settings.link.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_line_separator",
+          "default": true,
+          "label": "t:sections.header.settings.show_line_separator.label"
+        }
+      ]
+    },
+    {
+      "type": "header-info-block",
+      "name": "Información de Header",
+      "settings": [
+        {
+          "type": "select",
+          "id": "info_type",
+          "label": "Tipo de información",
+          "options": [
+            {
+              "value": "store_info",
+              "label": "Información de Sucursal"
+            },
+            {
+              "value": "shipping_info", 
+              "label": "Código Postal"
+            }
+          ],
+          "default": "store_info"
+        },
+        {
+          "type": "text",
+          "id": "store_label",
+          "label": "Etiqueta de sucursal",
+          "default": "Sucursal:",
+          "info": "Solo para tipo 'Información de Sucursal'"
+        },
+        {
+          "type": "text", 
+          "id": "default_text",
+          "label": "Texto por defecto",
+          "default": "Detectando ubicación...",
+          "info": "Solo para tipo 'Información de Sucursal'"
+        },
+        {
+          "type": "text",
+          "id": "shipping_label", 
+          "label": "Etiqueta de código postal",
+          "default": "Código Postal:",
+          "info": "Solo para tipo 'Código Postal'"
+        },
+        {
+          "type": "text",
+          "id": "placeholder_text",
+          "label": "Texto placeholder",
+          "default": "Ingresa tu CP",
+          "info": "Solo para tipo 'Código Postal'"
+        },
+        {
+          "type": "range",
+          "id": "max_length",
+          "label": "Máximo caracteres",
+          "min": 5,
+          "max": 15,
+          "step": 1,
+          "default": 10,
+          "info": "Solo para tipo 'Código Postal'"
+        },
+        {
+          "type": "color_scheme",
+          "id": "color_scheme",
+          "label": "t:sections.all.colors.label",
+          "default": "background-2"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
